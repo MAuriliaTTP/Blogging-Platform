@@ -1,24 +1,22 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./user');
+const sequelize = require('../sequelize');
 
 class Post extends Model {
   static associate(models) {
-    // Define associations here
+    // Post belongs to a User
+    this.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' });
+
+    // Post has many Comments
+    this.hasMany(models.Comment, { foreignKey: 'userId', targetKey: 'id' });
   }
 }
 
 Post.init(
   {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    }
+    // Define post model attributes
+    title: DataTypes.STRING,
+    content: DataTypes.TEXT,
   },
   {
     sequelize,

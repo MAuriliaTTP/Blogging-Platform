@@ -1,17 +1,23 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../sequelize');
 
 class User extends Model {
   static associate(models) {
-    // define association here
+    // User has many Posts
+    this.hasMany(models.Post, { foreignKey: 'userId', targetKey: 'id' });
+
+    // User has many Comments
+    this.hasMany(models.Comment, { foreignKey: 'userId', targetKey: 'id' });
   }
 }
 
 User.init(
   {
+    // Define user model attributes
     username: DataTypes.STRING,
-    password: DataTypes.STRING
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
   },
   {
     sequelize,

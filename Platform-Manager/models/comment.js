@@ -1,21 +1,21 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./user');
-const Post = require('./post');
+const sequelize = require('../sequelize');
 
 class Comment extends Model {
   static associate(models) {
-    // Define associations here
+    // Comment belongs to a User
+    this.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' });
+
+    // Comment belongs to a Post
+    this.belongsTo(models.Post, { foreignKey: 'userId', targetKey: 'id' });
   }
 }
 
 Comment.init(
   {
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    }
+    // Define comment model attributes
+    content: DataTypes.TEXT,
   },
   {
     sequelize,
@@ -23,6 +23,4 @@ Comment.init(
   }
 );
 
-
 module.exports = Comment;
-
