@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const authRoutes = require('./routes/auth');
+const postsRoutes = require('./routes/posts');
+const commentsRoutes = require('./routes/comments');
 const User = require('./models/User');
 const Post = require('./models/Post');
 const Comment = require('./models/Comment');
@@ -27,6 +29,8 @@ app.use(
     },
 }));
 app.use('/auth', authRoutes);
+app.use('/posts', postsRoutes);
+app.use('/comments', commentsRoutes);
 
 const authenticatedUser = (req, res, next) => {
   if (!req.session.userId) {
@@ -84,7 +88,7 @@ app.get('/', async (req, res) => {
 app.get('/profile', authenticatedUser, async (req, res) => {
   try {
     // Retrieve the user's profile
-    const user = await User.findByPk(req.user.id, {
+    const user = await User.findByPk(req.session.user.id, {
       include: [Post, Comment],
     });
 
@@ -103,3 +107,5 @@ app.get('/profile', authenticatedUser, async (req, res) => {
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
+
+module.exports = app;

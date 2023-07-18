@@ -35,6 +35,7 @@ router.post('/register', async (req, res) => {
     });
 
     res.json(newUser);
+    req.session.userId = User.id;
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

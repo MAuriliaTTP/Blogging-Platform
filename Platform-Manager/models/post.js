@@ -8,7 +8,7 @@ class Post extends Model {
     this.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' });
 
     // Post has many Comments
-    this.hasMany(models.Comment, { foreignKey: 'userId', targetKey: 'id' });
+    this.hasMany(models.Comment, { foreignKey: 'postId', targetKey: 'id' });
   }
 }
 

@@ -8,7 +8,7 @@ class Comment extends Model {
     this.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' });
 
     // Comment belongs to a Post
-    this.belongsTo(models.Post, { foreignKey: 'userId', targetKey: 'id' });
+    this.belongsTo(models.Post, { foreignKey: 'postId', targetKey: 'id' });
   }
 }
 
