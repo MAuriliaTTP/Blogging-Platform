@@ -29,7 +29,7 @@ router.get('/post/:id', async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    const comments = await Comment.findAll({where: { postId }});
+    const comments = await Comment.findAll({where: {id: postId }});
 
     res.json(comments);
   } catch (error) {
