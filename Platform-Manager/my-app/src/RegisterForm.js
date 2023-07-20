@@ -5,20 +5,22 @@ const RegisterForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const { login } = useContext(AuthContext);
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch('/routes/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password }),
       });
       if (response.ok) {
-        // Registration successful, log in the user
+        // Registration successful, now log in the user with the registered credentials
         await login({ email, password });
+
+        // Redirect to the homepage after successful registration and login
+        // The AuthProvider should update the user state upon successful login and redirect to the homepage
       } else {
         // Registration failed, handle error
         console.error('Registration failed');

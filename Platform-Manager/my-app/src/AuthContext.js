@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
     // and set the user state accordingly
     const checkAuthentication = async () => {
       try {
-        const response = await fetch('/api/check-authentication');
+        const response = await fetch('/routes/auth');
         if (response.ok) {
           const userData = await response.json();
           setAuthenticatedUser(userData);
